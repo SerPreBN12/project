@@ -1,0 +1,37 @@
+# Создайте репозиторий main-project на GitHub через веб-интерфейс
+git clone https://github.com/<ваш-username>/main-project.git
+cd main-project
+
+# Создайте репозиторий submodule-repo на GitHub
+git clone https://github.com/<ваш-username>/submodule-repo.git
+cd submodule-repo
+echo "Текст файла" > file1.txt  # Создайте тестовые файлы
+git add file1.txt
+git commit -m "Добавлен file1.txt"
+git push origin main  # Отправьте изменения
+
+# Вернитесь в main-project и добавьте подмодуль
+cd ../main-project
+git submodule add https://github.com/<ваш-username>/submodule-repo.git submodule-repo
+git commit -m "Добавлен подмодуль submodule-repo"
+git push origin main
+
+cd submodule-repo
+echo "Новый файл" > file2.txt
+git add file2.txt
+git commit -m "Добавлен file2.txt"
+git push origin main  # Отправьте изменения в подмодуль
+
+# Обновите подмодуль в основном репозитории
+cd ..
+git submodule update --remote  # Автоматическое обновление
+git commit -m "Обновлен подмодуль submodule-repo"
+git push origin main
+
+# Обновление до конкретной версии (коммита)
+cd submodule-repo
+git checkout <хэш-коммита>  # Замените на реальный хэш
+cd ..
+git add submodule-repo
+git commit -m "Подмодуль обновлен до коммита <хэш>"
+git push origin main
